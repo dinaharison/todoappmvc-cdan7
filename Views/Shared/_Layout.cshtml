@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List-CDAN7</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-right navbar-inverse navbar-fixed-top col">
+        <div class="container">
+            <div class="navbar-header">
+                @if (Session["utilisateur"] != null)
+                {
+                    @Html.ActionLink("My To Do App", "ListeTache", "Tache", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else
+                {
+                    @Html.ActionLink("My To Do App", "Login", "Utilisateur", new { area = "" }, new { @class = "navbar-brand" })
+                }
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    @if (Session["utilisateur"] != null)
+                    {
+                        <li>@Html.ActionLink("Deconnexion", "Deconnection", "Utilisateur", "", new {@class= "btn btn-outline-danger" })</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Application To Do CDAN7</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<todoappmvc_cdan7.Models.Tache>
+
+@{
+    ViewBag.Title = "ListeTache de ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Liste des Taches de @ViewBag.Info</h2>
+
+@*-------------Modal Debut------------*@
+<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form" method="post" action="AjouterTache">
+                    <div class="form-group mt-2">
+                        <label class="col-sm-2 control-label"
+                               for="tacheInput">Tache</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control"
+                                   required id="tacheInput" name="tacheInput" placeholder="Nouvelle Tache" />
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <div class="col-sm-10">
+                            @Html.Hidden("idInput")
+                        </div>
+                    </div>
+                    <div class="form-group visually-hidden utile mt-2">
+                        <label class="col-sm-2 control-label"
+                               for="tacheInput">Etat</label>
+                        <div class="form-check form-switch">
+                            @Html.CheckBox("etatInput", false, new { @class = "form-check-input" })
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <div class="col-sm-offset-2">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Soumettre</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*-------------Modal Fin------------*@
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Tache
+            </th>
+            <th>
+                Etat
+            </th>
+            <th hidden>
+                Utilisateur
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomTache)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDone)
+                </td>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.NomUtilisateur)
+                </td>
+                <td>
+                    <button onclick="modifierOnclick(this)" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalHorizontal">
+                        Modifier
+                    </button>
+                    @Html.ActionLink("Supprimer", "SupprimerTache", new { id = item.Id }, new { onclick = "return confirm('Êtes-vous sûr de vouloir supprimer?')", @class = "btn btn-outline-secondary btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <button id="ajouterButton" class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#myModalHorizontal">
+                    Ajouter
+                </button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<script type="text/javascript" src="~/Scripts/Tache.js"></script>
