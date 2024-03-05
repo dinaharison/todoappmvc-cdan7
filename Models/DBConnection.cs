@@ -62,14 +62,14 @@ namespace todoappmvc_cdan7.Models
 
         public static void InsertTache(Tache tache)
         {
-            var req = $"insert into public.\"Tache\"(username, tachenom) " +
+            var req = $"insert into public.\"Tache\"(username, description) " +
                 $"values('{tache.NomUtilisateur}','{tache.NomTache}')";
             ExecuteQuerry(req);
         }
 
         public static void ModifierTache(Tache tache)
         {
-            var req = $"Update public.\"Tache\" set state={tache.IsDone}, tachenom='{tache.NomTache}' where tacheid={tache.Id}";
+            var req = $"Update public.\"Tache\" set state={tache.IsDone}, description='{tache.NomTache}' where tacheid={tache.Id}";
             ExecuteQuerry(req);
         }
 
